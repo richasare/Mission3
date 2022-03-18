@@ -15,13 +15,14 @@ namespace Mission3
     public partial class Form1 : Form
     {
         private string provider = "localhost";
-        private string nomBdd = "SicilyLines";
+        private string nomBdd = "sicilyLines";
         private string uid = "root";
         private string mdp = "";
 
         private ConnexionSql maConnexionSql;
         private MySqlCommand oCom, com2;
         private DataTable dt;
+
         public Form1()
         {
             InitializeComponent();
@@ -47,7 +48,7 @@ namespace Mission3
 
                 dt = new DataTable();
 
-                oCom = maConnexionSql.reqExec("Select nom, libelle from liaison natural join port natural join secteur");
+                oCom = maConnexionSql.reqExec("Select * from liaison");
 
                 //      MySqlDataReader reader = oCom.ExecuteReader();
 
@@ -193,6 +194,11 @@ namespace Mission3
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
