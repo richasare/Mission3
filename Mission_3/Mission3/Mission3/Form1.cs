@@ -15,7 +15,7 @@ namespace Mission3
     public partial class Form1 : Form
     {
         private string provider = "localhost";
-        private string nomBdd = "sicilyLines";
+        private string nomBdd = "sicilylines";
         private string uid = "root";
         private string mdp = "";
 
