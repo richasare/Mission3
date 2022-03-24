@@ -20,8 +20,9 @@ namespace Mission3
         private string mdp = "";
 
         private ConnexionSql maConnexionSql;
-        private MySqlCommand oCom, com2;
+        private MySqlCommand oCom, com2; 
         private DataTable dt;
+        private DataTable dt2;
 
         public Form1()
         {
@@ -118,10 +119,79 @@ namespace Mission3
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tb_idsecteur_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_insert_Click(object sender, EventArgs e)
+        {
+            // string req = "insert into employe1 values (" + tId.Text + ",'" + tLogin.Text + "')";
+
+
+            // requête paramétrée
+            string req = "insert into liaison(duree,port_depart_id, port_arrivee_id, le_secteur_id) values (" + tb_duree.Text + "," + tb_idportdepart.Text + "," + tb_idportarrivee.Text + "," + tb_idsecteur.Text + ")";
+
+
+
+
+
+            com2 = maConnexionSql.reqExecParametree(req);
+
+
+            com2.Parameters.Add("@tb_duree", MySqlDbType.VarChar, 10);
+            com2.Parameters["@tb_duree"].Value = tb_duree.Text;
+
+            /*com2.Parameters.Add("@tb_duree", MySqlDbType.Int32, 3);
+            com2.Parameters["@tb_duree"].Value = Convert.ToInt32(tb_duree.Text);*/
+
+            com2.Parameters.Add("@tb_idportdepart", MySqlDbType.Int32, 3);
+            com2.Parameters["@tb_idportdepart"].Value = Convert.ToInt32(tb_idportdepart.Text);
+
+            com2.Parameters.Add("@tb_idportarrivee", MySqlDbType.Int32, 3);
+            com2.Parameters["@tb_idportarrivee"].Value = Convert.ToInt32(tb_idportarrivee.Text);
+
+            com2.Parameters.Add("@tb_idsecteur", MySqlDbType.Int32, 3);
+            com2.Parameters["@tb_idsecteur"].Value = Convert.ToInt32(tb_idsecteur.Text);
+
+            int affectedrows = com2.ExecuteNonQuery();
+
+            affiche();
+        }
+
+        private void btn_update_Click(object sender, EventArgs e)
+        {
             try
             {
 
-                string req = "update liaison set duree = '" + textBox1.Text + "' where id = " + tbId.Text;
+                string req = "update liaison set duree = '" + tb_duree.Text + "' where id = " + tb_idliaison_supp.Text;
 
                 com2 = maConnexionSql.reqExec(req);
 
@@ -136,67 +206,34 @@ namespace Mission3
                 MessageBox.Show(ex.Message);
 
             }
-
-
-
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btn_delete_Click(object sender, EventArgs e)
         {
-
-
-            string req = "delete from liaison where id = " + tbId.Text;
-
+            string req = "delete from liaison where id = " + tb_idliaison_supp.Text;
             com2 = maConnexionSql.reqExec(req);
 
             int affectedrows = com2.ExecuteNonQuery();
 
             affiche();
-
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            // string req = "insert into employe1 values (" + tId.Text + ",'" + tLogin.Text + "')";
-
-
-            // requête paramétrée
-            string req = "insert into liaison(id,duree,port_depart_id, port_arrivee_id, le_secteur_id) values ("+tbId.Text+","+textBox1.Text+","+textBox2.Text+","+textBox4.Text+")";
-
-
-
-
-
-            com2 = maConnexionSql.reqExecParametree(req);
-
-
-            com2.Parameters.Add("@id", MySqlDbType.Int32, 3);
-
-            com2.Parameters["@id"].Value = Convert.ToInt32(tbId.Text);
-
-
-            com2.Parameters.Add("@login", MySqlDbType.VarChar, 30);
-
-            com2.Parameters["@login"].Value = textBox1.Text;
-
-
-
-            int affectedrows = com2.ExecuteNonQuery();
-
-            affiche();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void label3_Click(object sender, EventArgs e)
         {
-            
+
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgv2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
