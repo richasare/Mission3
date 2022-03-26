@@ -109,6 +109,76 @@ namespace Mission3
 
         }
 
+        public void affiche2()
+
+        {
+            try
+            {
+
+                dt2 = new DataTable();
+
+                oCom = maConnexionSql.reqExec("Select la_liaison_id, libelle, la_periode_id, le_type_id, tarif from tarifer as t join liaison as l ON t.la_liaison_id=l.id");
+
+                //      MySqlDataReader reader = oCom.ExecuteReader();
+
+                MySqlDataAdapter myDataAdapter = new MySqlDataAdapter(oCom);
+
+                myDataAdapter.Fill(dt2);
+
+                dgv1.DataSource = dt2;
+
+                /*
+
+                                for (int i = 0; i <= reader.FieldCount - 1; i++)
+                                {
+
+                                    dt.Columns.Add(reader.GetName(i));
+                                }
+
+
+                                while (reader.Read())
+                                {
+
+
+
+
+                                    DataRow dr = dt.NewRow();
+
+
+                                    for (int i = 0; i <= reader.FieldCount - 1; i++)
+                                    {
+
+                                        dr[i] = reader.GetValue(i);
+                                    }
+
+                                    dt.Rows.Add(dr);
+
+                                }
+
+                    */
+
+
+                // DATAGRIDVIEW
+                //dgv1.DataSource = dt;
+
+                //     dgv1.Columns[0].ReadOnly = true;
+
+                //    reader.Close();
+
+
+            }
+
+
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+
+
 
 
 

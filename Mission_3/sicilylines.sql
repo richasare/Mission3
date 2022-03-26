@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 08 avr. 2022 à 16:57
+-- Généré le : sam. 26 mars 2022 à 01:02
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.1
 
@@ -52,6 +52,15 @@ CREATE TABLE `categorie` (
   `id` int(11) NOT NULL,
   `libelle` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `categorie`
+--
+
+INSERT INTO `categorie` (`id`, `libelle`) VALUES
+(1, 'A.passager'),
+(2, 'B.veh.inf.2m'),
+(3, 'C.veh.sup.2m');
 
 -- --------------------------------------------------------
 
@@ -146,7 +155,7 @@ CREATE TABLE `equipement` (
 
 CREATE TABLE `liaison` (
   `id` int(11) NOT NULL,
-  `duree` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `duree` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `port_depart_id` int(11) DEFAULT NULL,
   `port_arrivee_id` int(11) DEFAULT NULL,
   `le_secteur_id` int(11) DEFAULT NULL
@@ -191,6 +200,15 @@ CREATE TABLE `periode` (
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `periode`
+--
+
+INSERT INTO `periode` (`id`, `date_debut`, `date_fin`) VALUES
+(1, '2021-09-01', '2022-06-15'),
+(2, '2022-06-16', '2022-09-15'),
+(3, '2022-09-16', '2023-05-31');
 
 -- --------------------------------------------------------
 
@@ -274,8 +292,38 @@ CREATE TABLE `tarifer` (
   `la_liaison_id` int(11) NOT NULL,
   `la_periode_id` int(11) NOT NULL,
   `le_type_id` int(11) NOT NULL,
-  `tarif` decimal(10,0) NOT NULL
+  `tarif` float(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `tarifer`
+--
+
+INSERT INTO `tarifer` (`la_liaison_id`, `la_periode_id`, `le_type_id`, `tarif`) VALUES
+(1, 1, 1, 18),
+(1, 1, 2, 11),
+(1, 1, 3, 6),
+(1, 1, 4, 86),
+(1, 1, 5, 129),
+(1, 1, 6, 189),
+(1, 1, 7, 205),
+(1, 1, 8, 268),
+(1, 2, 1, 20),
+(1, 2, 2, 13),
+(1, 2, 3, 7),
+(1, 2, 4, 95),
+(1, 2, 5, 142),
+(1, 2, 6, 208),
+(1, 2, 7, 226),
+(1, 2, 8, 295),
+(1, 3, 1, 19),
+(1, 3, 2, 12),
+(1, 3, 3, 6),
+(1, 3, 4, 91),
+(1, 3, 5, 136),
+(1, 3, 6, 199),
+(1, 3, 7, 216),
+(1, 3, 8, 282);
 
 -- --------------------------------------------------------
 
@@ -309,6 +357,20 @@ CREATE TABLE `type` (
   `libelle` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `la_categorie_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `type`
+--
+
+INSERT INTO `type` (`id`, `libelle`, `la_categorie_id`) VALUES
+(1, 'A1.Adulte', 1),
+(2, 'A2.Junior', 1),
+(3, 'A3.Enfant', 1),
+(4, 'B1.Voit.long.4m', 2),
+(5, 'B2.Voit.long.5m', 2),
+(6, 'C1.Fourgon', 3),
+(7, 'C2.CampingCar', 3),
+(8, 'C3.Camion', 3);
 
 -- --------------------------------------------------------
 
@@ -467,7 +529,7 @@ ALTER TABLE `bateau`
 -- AUTO_INCREMENT pour la table `categorie`
 --
 ALTER TABLE `categorie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `client`
@@ -491,7 +553,7 @@ ALTER TABLE `liaison`
 -- AUTO_INCREMENT pour la table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `port`
@@ -521,7 +583,7 @@ ALTER TABLE `traversee`
 -- AUTO_INCREMENT pour la table `type`
 --
 ALTER TABLE `type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
