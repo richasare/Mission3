@@ -39,6 +39,7 @@ namespace Mission3
             maConnexionSql = ConnexionSql.getInstance(provider, nomBdd, uid, mdp);
             maConnexionSql.OpenConnection();
             affiche();
+            affiche2();
         }
 
         public void affiche()
@@ -110,14 +111,12 @@ namespace Mission3
         }
 
         public void affiche2()
-
         {
             try
             {
-
                 dt2 = new DataTable();
 
-                oCom = maConnexionSql.reqExec("Select la_liaison_id, libelle, la_periode_id, le_type_id, tarif from tarifer as t join liaison as l ON t.la_liaison_id=l.id");
+                oCom = maConnexionSql.reqExec("SELECT la_liaison_id, tarif, la_periode_id, le_type_id from tarifer JOIN liaison WHERE la_liaison_id = 1");
 
                 //      MySqlDataReader reader = oCom.ExecuteReader();
 
@@ -125,36 +124,24 @@ namespace Mission3
 
                 myDataAdapter.Fill(dt2);
 
-                dgv1.DataSource = dt2;
+                dgv2.DataSource = dt2;
 
                 /*
-
                                 for (int i = 0; i <= reader.FieldCount - 1; i++)
                                 {
-
                                     dt.Columns.Add(reader.GetName(i));
                                 }
 
-
                                 while (reader.Read())
                                 {
-
-
-
-
                                     DataRow dr = dt.NewRow();
-
 
                                     for (int i = 0; i <= reader.FieldCount - 1; i++)
                                     {
-
                                         dr[i] = reader.GetValue(i);
                                     }
-
                                     dt.Rows.Add(dr);
-
                                 }
-
                     */
 
 
@@ -167,19 +154,12 @@ namespace Mission3
 
 
             }
-
-
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message);
             }
 
         }
-
-
-
-
 
 
 
