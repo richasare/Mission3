@@ -116,7 +116,7 @@ namespace Mission3
             {
                 dt2 = new DataTable();
 
-                oCom = maConnexionSql.reqExec("SELECT la_liaison_id, tarif, la_periode_id, le_type_id from tarifer JOIN liaison WHERE la_liaison_id = 1");
+                oCom = maConnexionSql.reqExec("SELECT la_liaison_id, clibelle, libelle,la_periode_id,tarif FROM tarifer as ta JOIN type as ty ON ta.le_type_id = ty.id JOIN categorie as c ON ty.la_categorie_id = c.id");
 
                 //      MySqlDataReader reader = oCom.ExecuteReader();
 
