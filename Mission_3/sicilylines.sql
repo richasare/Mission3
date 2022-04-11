@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 26 mars 2022 à 01:02
+-- Généré le : lun. 11 avr. 2022 à 21:46
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.1
 
@@ -50,14 +50,14 @@ INSERT INTO `bateau` (`id`, `nom`, `longueur`, `largeur`, `vitesse`) VALUES
 
 CREATE TABLE `categorie` (
   `id` int(11) NOT NULL,
-  `libelle` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `clibelle` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `categorie`
 --
 
-INSERT INTO `categorie` (`id`, `libelle`) VALUES
+INSERT INTO `categorie` (`id`, `clibelle`) VALUES
 (1, 'A.passager'),
 (2, 'B.veh.inf.2m'),
 (3, 'C.veh.sup.2m');
@@ -166,7 +166,7 @@ CREATE TABLE `liaison` (
 --
 
 INSERT INTO `liaison` (`id`, `duree`, `port_depart_id`, `port_arrivee_id`, `le_secteur_id`) VALUES
-(1, '3H30', 1, 2, 1),
+(1, '3H', 1, 2, 1),
 (2, '4H40', 9, 2, 5),
 (3, '2H00', 6, 8, 3),
 (4, '1H30', 3, 5, 4),
@@ -547,7 +547,7 @@ ALTER TABLE `equipement`
 -- AUTO_INCREMENT pour la table `liaison`
 --
 ALTER TABLE `liaison`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `periode`
