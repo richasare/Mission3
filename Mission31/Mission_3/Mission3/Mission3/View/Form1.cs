@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Connecté;
+using Mission3.Controller;
 using MySql.Data.MySqlClient;
 
 namespace Mission3
@@ -19,8 +20,9 @@ namespace Mission3
         private string uid = "root";
         private string mdp = "";
 
+        
         private ConnexionSql maConnexionSql;
-        private MySqlCommand oCom, com2; 
+        private MySqlCommand oCom, com2;
         private DataTable dt;
         private DataTable dt2;
 
@@ -38,8 +40,22 @@ namespace Mission3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            maConnexionSql = ConnexionSql.getInstance(provider, nomBdd, uid, mdp);
-            maConnexionSql.OpenConnection();
+            try
+            {
+                maConnexionSql = MainController.getInstance(maConnexionSql, provider, nomBdd, uid, mdp);
+            }
+            catch (Exception emp)
+            {
+                MessageBox.Show("Une erreur est survenue lors de la connexion à la base de données" + emp.Message);
+            }
+            try
+            {
+                maConnexionSql = MainController.openConnection(maConnexionSql);
+            }
+            catch (Exception emp)
+            {
+                MessageBox.Show("Une erreur est survenue lors de la connexion à la base de données" + emp.Message);
+            }
             affiche();
 
             label_laison_a_changer.Visible = false;
@@ -62,7 +78,9 @@ namespace Mission3
 
                 dt = new DataTable();
 
-                oCom = maConnexionSql.reqExec("Select * from liaison");
+                oCom = MainController.reqExec(maConnexionSql, "Select * from liaison");
+
+
 
                 //      MySqlDataReader reader = oCom.ExecuteReader();
 
@@ -75,7 +93,7 @@ namespace Mission3
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Un problème est survenu lors de l'éxecution de la requete" + ex.Message);
             }
 
         }
@@ -88,7 +106,7 @@ namespace Mission3
 
                 dt = new DataTable();
 
-                
+
 
                 //      MySqlDataReader reader = oCom.ExecuteReader();
 
@@ -120,7 +138,7 @@ namespace Mission3
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         //CETTE METHODE N'EST PAS UTIL
@@ -130,10 +148,10 @@ namespace Mission3
             this.dgv1.MultiSelect = false;
         }
 
-       
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -149,13 +167,22 @@ namespace Mission3
         //CETTE REQUETE PERMET L'INSERTION D'UNE LIAISON
         private void btn_insert_Click(object sender, EventArgs e)
         {
-           
+
             // requête paramétrée
-            string req = "insert into liaison(duree,port_depart_id, port_arrivee_id, le_secteur_id) values ('" +(tb_duree.Text + "'," + tb_idportdepart.Text + "," + tb_idportarrivee.Text + "," + tb_idsecteur.Text + ")");
+            string req = "insert into liaison(duree,port_depart_id, port_arrivee_id, le_secteur_id) values ('" + (tb_duree.Text + "'," + tb_idportdepart.Text + "," + tb_idportarrivee.Text + "," + tb_idsecteur.Text + ")");
 
 
             MessageBox.Show(req);
-            com2 = maConnexionSql.reqExecParametree(req);
+            try
+            {
+                com2 = MainController.reqExec(maConnexionSql, req);
+
+            }
+            catch (Exception emp)
+            {
+                MessageBox.Show("Un problème est survenu lors de l'éxecution de la requete" + emp.Message);
+            }
+
 
 
             //CE GROUPE DE COMMANDE PERMET DE CONTROLER LE TYPE, AINSI QUE LA QUANTITE DE CARACTERE QUE PEUVENT CONTENIR LES TEXTBOX AFIN D'ETRE EN ACCORD AVEC LA BASE DE DONNEE
@@ -185,7 +212,11 @@ namespace Mission3
                 if (tb_tarif_uppd.Visible == true)
                 {
                     string req = "update tarifer set tarif = '" + tb_tarif_uppd.Text + "' where tarif = " + le_tarif;
-                    com2 = maConnexionSql.reqExec(req);
+
+                    com2 = MainController.reqExec(maConnexionSql, req);
+
+
+
 
                     MessageBox.Show(req);
                     int affectedrows = com2.ExecuteNonQuery();
@@ -194,10 +225,14 @@ namespace Mission3
                 {
                     //c'est cette requête qui sera exécuter lors du click sur le boutton "update".
                     string req = "update liaison set duree = '" + tb_duree_uppd.Text + "' where id = " + tb_idliaison_uppd.Text;
-                    com2 = maConnexionSql.reqExec(req);
+
+                    com2 = MainController.reqExec(maConnexionSql, req);
+
+
                     int affectedrows = com2.ExecuteNonQuery();
 
-                   
+
+
                 }
 
                 affiche();
@@ -206,9 +241,10 @@ namespace Mission3
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Un problème est survenu lors de l'éxecution de la requete" + ex.Message);
 
             }
+
         }
 
         //CETTE METHODE PERMET DE SUPPRIMER UNE LIAISON
@@ -216,7 +252,16 @@ namespace Mission3
         {
             //c'est la requête 
             string req = "delete from liaison where id = " + tb_idliaison_supp.Text;
-            com2 = maConnexionSql.reqExec(req);
+            try
+            {
+                com2 = MainController.reqExec(maConnexionSql, req);
+
+            }
+            catch (Exception emp)
+            {
+                MessageBox.Show("Un problème est survenu lors de l'éxecution de la requete" + emp.Message);
+            }
+
 
             int affectedrows = com2.ExecuteNonQuery();
 
@@ -264,7 +309,7 @@ namespace Mission3
 
                 //idliaison va prendre en valeur id (qui est en string) de la table liaison et va le convertir en int.
                 int idliaison = Convert.ToInt32(dgv1.Rows[e.RowIndex].Cells["id"].FormattedValue.ToString());
-                oCom = maConnexionSql.reqExec("SELECT la_liaison_id, clibelle, libelle  ,la_periode_id,tarif FROM tarifer as ta JOIN type as ty ON ta.le_type_id = ty.id JOIN categorie as c ON ty.la_categorie_id = c.id where la_liaison_id='" + idliaison + "'");
+                oCom = MainController.reqExec(maConnexionSql, "SELECT la_liaison_id, clibelle, libelle  ,la_periode_id,tarif FROM tarifer as ta JOIN type as ty ON ta.le_type_id = ty.id JOIN categorie as c ON ty.la_categorie_id = c.id where la_liaison_id='" + idliaison + "'");
 
                 MySqlDataAdapter myDataAdapter = new MySqlDataAdapter(oCom);
 
@@ -302,7 +347,7 @@ namespace Mission3
                 le_tarif = Convert.ToInt32(dgv2.Rows[e.RowIndex].Cells["tarif"].FormattedValue.ToString());
 
             }
-            catch 
+            catch
             {
 
             }
@@ -323,7 +368,14 @@ namespace Mission3
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            maConnexionSql.CloseConnection();
+            try
+            {
+                maConnexionSql = MainController.closeConnection(maConnexionSql);
+            }
+            catch (Exception emp)
+            {
+                MessageBox.Show("Une erreur est survenue lors de la fermeture de la connexion à la base de données" + emp.Message);
+            }
         }
 
     }
