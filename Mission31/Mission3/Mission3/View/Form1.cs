@@ -171,7 +171,6 @@ namespace Mission3
             // requête paramétrée
             string req = "insert into liaison(duree,port_depart_id, port_arrivee_id, le_secteur_id) values ('" + (tb_duree.Text + "'," + tb_idportdepart.Text + "," + tb_idportarrivee.Text + "," + tb_idsecteur.Text + ")");
 
-
             MessageBox.Show(req);
             try
             {
@@ -182,7 +181,6 @@ namespace Mission3
             {
                 MessageBox.Show("Un problème est survenu lors de l'éxecution de la requete" + emp.Message);
             }
-
 
 
             //CE GROUPE DE COMMANDE PERMET DE CONTROLER LE TYPE, AINSI QUE LA QUANTITE DE CARACTERE QUE PEUVENT CONTENIR LES TEXTBOX AFIN D'ETRE EN ACCORD AVEC LA BASE DE DONNEE
@@ -214,12 +212,9 @@ namespace Mission3
                     string req = "update tarifer set tarif = '" + tb_tarif_uppd.Text + "' where tarif = " + le_tarif;
 
                     com2 = MainController.reqExec(maConnexionSql, req);
-
-
-
-
                     MessageBox.Show(req);
                     int affectedrows = com2.ExecuteNonQuery();
+                   
                 }
                 else
                 {
@@ -227,24 +222,15 @@ namespace Mission3
                     string req = "update liaison set duree = '" + tb_duree_uppd.Text + "' where id = " + tb_idliaison_uppd.Text;
 
                     com2 = MainController.reqExec(maConnexionSql, req);
-
-
                     int affectedrows = com2.ExecuteNonQuery();
 
-
-
                 }
-
                 affiche();
-
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show("Un problème est survenu lors de l'éxecution de la requete" + ex.Message);
-
             }
-
         }
 
         //CETTE METHODE PERMET DE SUPPRIMER UNE LIAISON
@@ -294,7 +280,7 @@ namespace Mission3
         }
 
         //CETTE METHODE PERMET DE VOIR TOUT LES TARIF POUR UNE LIAISON SELECTIONNER DANS LA DVG1
-        private void dgv1_CellClick(object sender, DataGridViewCellEventArgs e)
+        public void dgv1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             label_laison_a_changer.Visible = true;
             label_nvl_duree.Visible = true;
